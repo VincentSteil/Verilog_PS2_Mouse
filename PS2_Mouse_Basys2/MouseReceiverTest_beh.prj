@@ -1,0 +1,3 @@
+verilog work "MouseReceiver.v"
+verilog work "MouseReceiverTest.v"
+verilog work "/afs/inf.ed.ac.uk/group/teaching/cd/Xilinx132/ISE_DS/ISE//verilog/src/glbl.v"

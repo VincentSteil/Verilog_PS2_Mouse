@@ -1,0 +1,5 @@
+verilog work "SevenSegmentDisplay.v"
+verilog work "MouseTransmitter.v"
+verilog work "MouseReceiver.v"
+verilog work "MouseMasterSM.v"
+verilog work "MouseTransceiver.v"

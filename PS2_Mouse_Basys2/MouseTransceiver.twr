@@ -1,0 +1,111 @@
+--------------------------------------------------------------------------------
+Release 13.2 Trace  (lin64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+/afs/inf.ed.ac.uk/group/teaching/cd/Xilinx132/ISE_DS/ISE/bin/lin64/unwrapped/trce
+-intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml MouseTransceiver.twx
+MouseTransceiver.ncd -o MouseTransceiver.twr MouseTransceiver.pcf -ucf
+MouseTransceiver.ucf
+
+Design file:              MouseTransceiver.ncd
+Physical constraint file: MouseTransceiver.pcf
+Device,package,speed:     xc3s100e,cp132,-5 (PRODUCTION 1.27 2011-06-20)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+INFO:Timing:3390 - This architecture does not support a default System Jitter 
+   value, please add SYSTEM_JITTER constraint to the UCF to modify the Clock 
+   Uncertainty calculation.
+INFO:Timing:3389 - This architecture does not support 'Discrete Jitter' and 
+   'Phase Error' calculations, these terms will be zero in the Clock 
+   Uncertainty calculation.  Please make appropriate modification to 
+   SYSTEM_JITTER to account for the unsupported Discrete Jitter and Phase 
+   Error.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Setup/Hold to clock CLK
+------------+------------+------------+------------------+--------+
+            |Max Setup to|Max Hold to |                  | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+------------+------------+------------+------------------+--------+
+CLK_MOUSE   |    0.673(R)|    0.552(R)|CLK_BUFGP         |   0.000|
+DATA_MOUSE  |    2.565(R)|    0.634(R)|CLK_BUFGP         |   0.000|
+RESET       |    2.193(R)|    0.800(R)|CLK_BUFGP         |   0.000|
+------------+------------+------------+------------------+--------+
+
+Clock CLK to Pad
+--------------+------------+------------------+--------+
+              | clk (edge) |                  | Clock  |
+Destination   |   to PAD   |Internal Clock(s) | Phase  |
+--------------+------------+------------------+--------+
+AN0           |    8.878(R)|CLK_BUFGP         |   0.000|
+AN1           |    8.621(R)|CLK_BUFGP         |   0.000|
+AN2           |    8.536(R)|CLK_BUFGP         |   0.000|
+AN3           |    8.870(R)|CLK_BUFGP         |   0.000|
+CA            |    8.163(R)|CLK_BUFGP         |   0.000|
+CB            |    8.868(R)|CLK_BUFGP         |   0.000|
+CC            |    9.317(R)|CLK_BUFGP         |   0.000|
+CD            |    9.135(R)|CLK_BUFGP         |   0.000|
+CE            |    9.335(R)|CLK_BUFGP         |   0.000|
+CF            |    8.223(R)|CLK_BUFGP         |   0.000|
+CG            |    9.182(R)|CLK_BUFGP         |   0.000|
+CLK_MOUSE     |   10.309(R)|CLK_BUFGP         |   0.000|
+DATA_MOUSE    |   10.553(R)|CLK_BUFGP         |   0.000|
+MouseStatus<0>|    7.518(R)|CLK_BUFGP         |   0.000|
+MouseStatus<1>|    7.553(R)|CLK_BUFGP         |   0.000|
+MouseStatus<2>|    7.824(R)|CLK_BUFGP         |   0.000|
+MouseStatus<3>|    7.200(R)|CLK_BUFGP         |   0.000|
+MouseX<0>     |    7.446(R)|CLK_BUFGP         |   0.000|
+MouseX<1>     |    7.254(R)|CLK_BUFGP         |   0.000|
+MouseX<2>     |    7.208(R)|CLK_BUFGP         |   0.000|
+MouseX<3>     |    7.426(R)|CLK_BUFGP         |   0.000|
+MouseX<4>     |    7.670(R)|CLK_BUFGP         |   0.000|
+MouseX<5>     |    7.486(R)|CLK_BUFGP         |   0.000|
+MouseX<6>     |    7.715(R)|CLK_BUFGP         |   0.000|
+MouseX<7>     |    7.718(R)|CLK_BUFGP         |   0.000|
+MouseY<0>     |    8.203(R)|CLK_BUFGP         |   0.000|
+MouseY<1>     |    7.639(R)|CLK_BUFGP         |   0.000|
+MouseY<2>     |    7.725(R)|CLK_BUFGP         |   0.000|
+MouseY<3>     |    7.669(R)|CLK_BUFGP         |   0.000|
+MouseY<4>     |    7.233(R)|CLK_BUFGP         |   0.000|
+MouseY<5>     |    7.481(R)|CLK_BUFGP         |   0.000|
+MouseY<6>     |    7.717(R)|CLK_BUFGP         |   0.000|
+--------------+------------+------------------+--------+
+
+Clock to Setup on destination clock CLK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK            |    6.959|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Analysis completed Tue Feb 25 06:40:39 2014 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 256 MB
+
+
+

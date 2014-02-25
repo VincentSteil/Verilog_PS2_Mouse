@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/MouseTransceiver.ncd
+OUTFILE=/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/MouseTransceiver.bit
+FAMILY=Spartan3E
+PART=xc3s100e-5cp132
+WORKINGDIR=/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2
+LICENSE=WebPack
+USER_INFO=177283050_0_0_252

@@ -1,0 +1,672 @@
+Release 13.2 - xst O.61xd (lin64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> 
+Reading design: MouseTransceiver.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "MouseTransceiver.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "MouseTransceiver"
+Output Format                      : NGC
+Target Device                      : xc3s100e-5-cp132
+
+---- Source Options
+Top Module Name                    : MouseTransceiver
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "SevenSegmentDisplay.v" in library work
+Compiling verilog file "MouseTransmitter.v" in library work
+Module <SevenSegmentDisplay> compiled
+Compiling verilog file "MouseReceiver.v" in library work
+Module <MouseTransmitter> compiled
+Compiling verilog file "MouseMasterSM.v" in library work
+Module <MouseReceiver> compiled
+Compiling verilog file "MouseTransceiver.v" in library work
+Module <MouseMasterSM> compiled
+Module <MouseTransceiver> compiled
+No errors in compilation
+Analysis of file <"MouseTransceiver.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <MouseTransceiver> in library <work> with parameters.
+	MouseLimitX = "10100000"
+	MouseLimitY = "01111000"
+
+Analyzing hierarchy for module <MouseTransmitter> in library <work>.
+
+Analyzing hierarchy for module <MouseReceiver> in library <work>.
+
+Analyzing hierarchy for module <MouseMasterSM> in library <work>.
+
+Analyzing hierarchy for module <SevenSegmentDisplay> in library <work>.
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <MouseTransceiver>.
+	MouseLimitX = 8'b10100000
+	MouseLimitY = 8'b01111000
+Module <MouseTransceiver> is correct for synthesis.
+ 
+Analyzing module <MouseTransmitter> in library <work>.
+Module <MouseTransmitter> is correct for synthesis.
+ 
+Analyzing module <MouseReceiver> in library <work>.
+Module <MouseReceiver> is correct for synthesis.
+ 
+Analyzing module <MouseMasterSM> in library <work>.
+Module <MouseMasterSM> is correct for synthesis.
+ 
+Analyzing module <SevenSegmentDisplay> in library <work>.
+Module <SevenSegmentDisplay> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <MouseTransmitter>.
+    Related source file is "MouseTransmitter.v".
+    Found finite state machine <FSM_0> for signal <Curr_State>.
+    -----------------------------------------------------------------------
+    | States             | 11                                             |
+    | Transitions        | 26                                             |
+    | Inputs             | 6                                              |
+    | Outputs            | 8                                              |
+    | Clock              | CLK                       (rising_edge)        |
+    | Reset              | RESET                     (positive)           |
+    | Reset type         | synchronous                                    |
+    | Reset State        | 0000                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit register for signal <ClkMouseInDly>.
+    Found 1-bit register for signal <Curr_ByteSent>.
+    Found 8-bit register for signal <Curr_ByteToSend>.
+    Found 1-bit register for signal <Curr_MouseClkOutWE>.
+    Found 1-bit register for signal <Curr_MouseDataOut>.
+    Found 1-bit register for signal <Curr_MouseDataOutWE>.
+    Found 16-bit register for signal <Curr_SendCounter>.
+    Found 1-bit xor8 for signal <Next_MouseDataOut$xor0000>.
+    Found 16-bit adder for signal <Next_SendCounter$share0000> created at line 92.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  29 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   1 Multiplexer(s).
+	inferred   1 Xor(s).
+Unit <MouseTransmitter> synthesized.
+
+
+Synthesizing Unit <MouseReceiver>.
+    Related source file is "MouseReceiver.v".
+    Found finite state machine <FSM_1> for signal <Curr_State>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 16                                             |
+    | Inputs             | 6                                              |
+    | Outputs            | 5                                              |
+    | Clock              | CLK                       (rising_edge)        |
+    | Reset              | RESET                     (positive)           |
+    | Reset type         | synchronous                                    |
+    | Reset State        | 000                                            |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit register for signal <ClkMouseInDly>.
+    Found 4-bit register for signal <Curr_BitCounter>.
+    Found 1-bit register for signal <Curr_ByteReceived>.
+    Found 8-bit register for signal <Curr_MSCodeShiftReg>.
+    Found 2-bit register for signal <Curr_MSCodeStatus>.
+    Found 16-bit register for signal <Curr_TimeoutCounter>.
+    Found 4-bit adder for signal <Next_BitCounter$addsub0000> created at line 114.
+    Found 1-bit xor8 for signal <Next_MSCodeStatus_0$xor0000>.
+    Found 1-bit xor2 for signal <Next_MSCodeStatus_0$xor0001> created at line 127.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  32 D-type flip-flop(s).
+	inferred   2 Adder/Subtractor(s).
+	inferred   1 Xor(s).
+Unit <MouseReceiver> synthesized.
+
+
+Synthesizing Unit <MouseMasterSM>.
+    Related source file is "MouseMasterSM.v".
+    Found finite state machine <FSM_2> for signal <Curr_State>.
+    -----------------------------------------------------------------------
+    | States             | 13                                             |
+    | Transitions        | 35                                             |
+    | Inputs             | 8                                              |
+    | Outputs            | 15                                             |
+    | Clock              | CLK                       (rising_edge)        |
+    | Reset              | RESET                     (positive)           |
+    | Reset type         | synchronous                                    |
+    | Reset State        | 0000                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 8-bit register for signal <Curr_ByteToSend>.
+    Found 24-bit register for signal <Curr_Counter>.
+    Found 8-bit register for signal <Curr_Dx>.
+    Found 8-bit register for signal <Curr_Dy>.
+    Found 1-bit register for signal <Curr_ReadEnable>.
+    Found 1-bit register for signal <Curr_SendByte>.
+    Found 1-bit register for signal <Curr_SendInterrupt>.
+    Found 8-bit register for signal <Curr_Status>.
+    Found 26-bit register for signal <Curr_Timeout_Counter>.
+    Found 24-bit adder for signal <Next_Counter$addsub0000> created at line 132.
+    Found 26-bit adder for signal <Next_Timeout_Counter$addsub0000> created at line 274.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  85 D-type flip-flop(s).
+	inferred   2 Adder/Subtractor(s).
+Unit <MouseMasterSM> synthesized.
+
+
+Synthesizing Unit <SevenSegmentDisplay>.
+    Related source file is "SevenSegmentDisplay.v".
+WARNING:Xst:653 - Signal <setdp> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+INFO:Xst:1799 - State 100 is never reached in FSM <digit>.
+    Found finite state machine <FSM_3> for signal <digit>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 8                                              |
+    | Inputs             | 4                                              |
+    | Outputs            | 4                                              |
+    | Clock              | CLK                       (rising_edge)        |
+    | Power Up State     | 000                                            |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 16x8-bit ROM for signal <$old_cathode_3>.
+    Found 20-bit register for signal <counter>.
+    Found 20-bit adder for signal <counter$share0000>.
+    Found 4-bit register for signal <data>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 ROM(s).
+	inferred  24 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <SevenSegmentDisplay> synthesized.
+
+
+Synthesizing Unit <MouseTransceiver>.
+    Related source file is "MouseTransceiver.v".
+    Found 1-bit tristate buffer for signal <CLK_MOUSE>.
+    Found 1-bit tristate buffer for signal <DATA_MOUSE>.
+    Found 4-bit register for signal <MouseStatus>.
+    Found 8-bit register for signal <MouseX>.
+    Found 8-bit register for signal <MouseY>.
+    Found 1-bit register for signal <ClkMouseIn>.
+    Found 8-bit register for signal <MouseClkFilter>.
+    Found 9-bit adder for signal <MouseNewX>.
+    Found 9-bit adder for signal <MouseNewY>.
+    Found 10-bit comparator greater for signal <MouseX$cmp_gt0000> created at line 237.
+    Found 10-bit comparator less for signal <MouseX$cmp_lt0000> created at line 235.
+    Found 10-bit comparator greater for signal <MouseY$cmp_gt0000> created at line 249.
+    Found 10-bit comparator less for signal <MouseY$cmp_lt0000> created at line 247.
+    Summary:
+	inferred  29 D-type flip-flop(s).
+	inferred   2 Adder/Subtractor(s).
+	inferred   4 Comparator(s).
+	inferred   2 Tristate(s).
+Unit <MouseTransceiver> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 16x8-bit ROM                                          : 1
+# Adders/Subtractors                                   : 8
+ 16-bit adder                                          : 2
+ 20-bit adder                                          : 1
+ 24-bit adder                                          : 1
+ 26-bit adder                                          : 1
+ 4-bit adder                                           : 1
+ 9-bit adder                                           : 2
+# Registers                                            : 36
+ 1-bit register                                        : 19
+ 16-bit register                                       : 2
+ 2-bit register                                        : 1
+ 20-bit register                                       : 1
+ 24-bit register                                       : 1
+ 26-bit register                                       : 1
+ 4-bit register                                        : 3
+ 8-bit register                                        : 8
+# Comparators                                          : 4
+ 10-bit comparator greater                             : 2
+ 10-bit comparator less                                : 2
+# Multiplexers                                         : 1
+ 1-bit 8-to-1 multiplexer                              : 1
+# Tristates                                            : 2
+ 1-bit tristate buffer                                 : 2
+# Xors                                                 : 3
+ 1-bit xor2                                            : 1
+ 1-bit xor8                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_3> for best encoding.
+Optimizing FSM <SevenSeg/digit/FSM> on signal <digit[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 000   | 00
+ 001   | 01
+ 010   | 11
+ 011   | 10
+ 100   | unreached
+-------------------
+Analyzing FSM <FSM_2> for best encoding.
+Optimizing FSM <MSM/Curr_State/FSM> on signal <Curr_State[1:13]> with one-hot encoding.
+------------------------
+ State | Encoding
+------------------------
+ 0000  | 0000000000001
+ 0001  | 0000000000010
+ 0010  | 0000000000100
+ 0011  | 0000000001000
+ 0100  | 0000000010000
+ 0101  | 0000000100000
+ 0110  | 0000001000000
+ 0111  | 0000010000000
+ 1000  | 0000100000000
+ 1001  | 0001000000000
+ 1010  | 0010000000000
+ 1011  | 0100000000000
+ 1100  | 1000000000000
+------------------------
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <R/Curr_State/FSM> on signal <Curr_State[1:3]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 000   | 000
+ 001   | 001
+ 010   | 011
+ 011   | 010
+ 100   | 110
+-------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <T/Curr_State/FSM> on signal <Curr_State[1:11]> with one-hot encoding.
+----------------------
+ State | Encoding
+----------------------
+ 0000  | 00000000001
+ 0001  | 00000000010
+ 0010  | 00000000100
+ 0011  | 00000001000
+ 0100  | 00000010000
+ 0101  | 00000100000
+ 0110  | 00001000000
+ 0111  | 00010000000
+ 1000  | 00100000000
+ 1001  | 01000000000
+ 1010  | 10000000000
+----------------------
+
+Synthesizing (advanced) Unit <SevenSegmentDisplay>.
+INFO:Xst:3034 - In order to maximize performance and save block RAM resources, the small ROM <Mrom__old_cathode_3> will be implemented on LUT. If you want to force its implementation on block, use option/constraint rom_style.
+Unit <SevenSegmentDisplay> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 4
+# ROMs                                                 : 1
+ 16x8-bit ROM                                          : 1
+# Adders/Subtractors                                   : 8
+ 16-bit adder                                          : 2
+ 20-bit adder                                          : 1
+ 24-bit adder                                          : 1
+ 26-bit adder                                          : 1
+ 4-bit adder                                           : 1
+ 9-bit adder                                           : 2
+# Registers                                            : 199
+ Flip-Flops                                            : 199
+# Comparators                                          : 4
+ 10-bit comparator greater                             : 2
+ 10-bit comparator less                                : 2
+# Multiplexers                                         : 1
+ 1-bit 8-to-1 multiplexer                              : 1
+# Xors                                                 : 3
+ 1-bit xor2                                            : 1
+ 1-bit xor8                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <MouseTransceiver> ...
+WARNING:Xst:1710 - FF/Latch <MouseY_7> (without init value) has a constant value of 0 in block <MouseTransceiver>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <MouseY_7> (without init value) has a constant value of 0 in block <MouseTransceiver>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <MouseY_7> (without init value) has a constant value of 0 in block <MouseTransceiver>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <MouseY_7> (without init value) has a constant value of 0 in block <MouseTransceiver>. This FF/Latch will be trimmed during the optimization process.
+
+Optimizing unit <MouseTransmitter> ...
+
+Optimizing unit <MouseReceiver> ...
+
+Optimizing unit <MouseMasterSM> ...
+
+Optimizing unit <SevenSegmentDisplay> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+INFO:Xst:2261 - The FF/Latch <T/ClkMouseInDly> in Unit <MouseTransceiver> is equivalent to the following FF/Latch, which will be removed : <R/ClkMouseInDly> 
+Found area constraint ratio of 100 (+ 5) on block MouseTransceiver, actual ratio is 28.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 226
+ Flip-Flops                                            : 226
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : MouseTransceiver.ngr
+Top Level Output File Name         : MouseTransceiver
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 36
+
+Cell Usage :
+# BELS                             : 746
+#      GND                         : 1
+#      INV                         : 8
+#      LUT1                        : 99
+#      LUT2                        : 37
+#      LUT2_D                      : 4
+#      LUT3                        : 49
+#      LUT3_D                      : 1
+#      LUT3_L                      : 2
+#      LUT4                        : 256
+#      LUT4_D                      : 27
+#      LUT4_L                      : 10
+#      MUXCY                       : 126
+#      MUXF5                       : 4
+#      MUXF6                       : 1
+#      VCC                         : 1
+#      XORCY                       : 120
+# FlipFlops/Latches                : 226
+#      FD                          : 23
+#      FDE                         : 8
+#      FDR                         : 140
+#      FDRE                        : 13
+#      FDRS                        : 26
+#      FDRSE                       : 4
+#      FDS                         : 6
+#      FDSE                        : 6
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 35
+#      IBUF                        : 1
+#      IOBUF                       : 2
+#      OBUF                        : 32
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s100ecp132-5 
+
+ Number of Slices:                      263  out of    960    27%  
+ Number of Slice Flip Flops:            226  out of   1920    11%  
+ Number of 4 input LUTs:                493  out of   1920    25%  
+ Number of IOs:                          36
+ Number of bonded IOBs:                  36  out of     83    43%  
+ Number of GCLKs:                         1  out of     24     4%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLK                                | BUFGP                  | 226   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 7.633ns (Maximum Frequency: 131.011MHz)
+   Minimum input arrival time before clock: 3.960ns
+   Maximum output required time after clock: 5.691ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLK'
+  Clock period: 7.633ns (frequency: 131.011MHz)
+  Total number of paths / destination ports: 11938 / 278
+-------------------------------------------------------------------------
+Delay:               7.633ns (Levels of Logic = 6)
+  Source:            SevenSeg/counter_15 (FF)
+  Destination:       SevenSeg/data_2 (FF)
+  Source Clock:      CLK rising
+  Destination Clock: CLK rising
+
+  Data Path: SevenSeg/counter_15 to SevenSeg/data_2
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               3   0.514   0.603  SevenSeg/counter_15 (SevenSeg/counter_15)
+     LUT4_D:I0->O          4   0.612   0.651  SevenSeg/digit_cmp_eq0000112 (SevenSeg/digit_cmp_eq0000112)
+     LUT2_D:I0->LO         1   0.612   0.103  SevenSeg/digit_cmp_eq0000126 (N128)
+     LUT4:I3->O            2   0.612   0.410  SevenSeg/digit_cmp_eq000336 (SevenSeg/digit_cmp_eq0003)
+     LUT4:I2->O            1   0.612   0.360  SevenSeg/counter_mux0000<0>116_SW0 (N34)
+     LUT4_D:I3->O         23   0.612   1.052  SevenSeg/data_mux0000<0>11 (SevenSeg/N01)
+     LUT3:I2->O            1   0.612   0.000  SevenSeg/data_mux0000<2>201 (SevenSeg/data_mux0000<2>20)
+     FDS:D                     0.268          SevenSeg/data_2
+    ----------------------------------------
+    Total                      7.633ns (4.454ns logic, 3.179ns route)
+                                       (58.4% logic, 41.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLK'
+  Total number of paths / destination ports: 211 / 211
+-------------------------------------------------------------------------
+Offset:              3.960ns (Levels of Logic = 2)
+  Source:            RESET (PAD)
+  Destination:       MouseClkFilter_0 (FF)
+  Destination Clock: CLK rising
+
+  Data Path: RESET to MouseClkFilter_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O           192   1.106   1.116  RESET_IBUF (RESET_IBUF)
+     INV:I->O              8   0.612   0.643  RESET_inv1_INV_0 (RESET_inv)
+     FDE:CE                    0.483          MouseClkFilter_0
+    ----------------------------------------
+    Total                      3.960ns (2.201ns logic, 1.759ns route)
+                                       (55.6% logic, 44.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLK'
+  Total number of paths / destination ports: 58 / 32
+-------------------------------------------------------------------------
+Offset:              5.691ns (Levels of Logic = 2)
+  Source:            SevenSeg/digit_FSM_FFd2 (FF)
+  Destination:       AN3 (PAD)
+  Source Clock:      CLK rising
+
+  Data Path: SevenSeg/digit_FSM_FFd2 to AN3
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              11   0.514   0.945  SevenSeg/digit_FSM_FFd2 (SevenSeg/digit_FSM_FFd2)
+     LUT2:I0->O            3   0.612   0.451  SevenSeg/anode<3>1 (AN3_OBUF)
+     OBUF:I->O                 3.169          AN3_OBUF (AN3)
+    ----------------------------------------
+    Total                      5.691ns (4.295ns logic, 1.396ns route)
+                                       (75.5% logic, 24.5% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 8.00 secs
+Total CPU time to Xst completion: 8.15 secs
+ 
+--> 
+
+
+Total memory usage is 464528 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
+Number of infos    :    4 (   0 filtered)
+

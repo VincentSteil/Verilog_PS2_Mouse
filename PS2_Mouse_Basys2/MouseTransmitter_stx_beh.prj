@@ -1,0 +1,2 @@
+verilog isim_temp "MouseTransmitter.v"
+verilog isim_temp "/afs/inf.ed.ac.uk/group/teaching/cd/Xilinx132/ISE_DS/ISE//verilog/src/glbl.v"

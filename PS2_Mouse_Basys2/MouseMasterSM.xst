@@ -1,0 +1,5 @@
+set -tmpdir "/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/xst/projnav.tmp"
+set -xsthdpdir "/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/xst"
+elaborate
+-ifn MouseMasterSM.prj
+-ifmt mixed

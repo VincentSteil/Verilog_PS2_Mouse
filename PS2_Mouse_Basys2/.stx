@@ -1,0 +1,38 @@
+Release 13.2 - xst O.61xd (lin64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to /afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.06 secs
+ 
+--> 
+Parameter xsthdpdir set to /afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.06 secs
+ 
+--> 
+WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "MouseTransceiver.v" in library work
+ERROR:HDLCompilers:26 - "MouseTransceiver.v" line 198 unexpected token: 'if'
+ERROR:HDLCompilers:26 - "MouseTransceiver.v" line 198 expecting ';', found ')'
+ERROR:HDLCompilers:26 - "MouseTransceiver.v" line 200 expecting 'end', found 'else'
+Module <MouseTransceiver> compiled
+ERROR:HDLCompilers:26 - "MouseTransceiver.v" line 222 expecting 'endmodule', found 'end'
+Analysis of file <".prj"> failed.
+--> 
+
+
+Total memory usage is 411348 kilobytes
+
+Number of errors   :    4 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

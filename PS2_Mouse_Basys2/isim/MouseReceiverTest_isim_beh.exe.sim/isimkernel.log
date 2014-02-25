@@ -1,0 +1,29 @@
+Command line:
+   MouseReceiverTest_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  54861
+
+Tue Feb 25 04:41:09 2014
+
+
+ Elaboration Time: 0.01 sec
+
+ Current Memory Usage: 201.695 Meg
+
+ Total Signals          : 24
+ Total Nets             : 31
+ Total Signal Drivers   : 14
+ Total Blocks           : 3
+ Total Primitive Blocks : 2
+ Total Processes        : 21
+ Total Traceable Variables  : 36
+ Total Scalar Nets and Variables : 185
+Total Line Count : 337
+
+ Total Simulation Time: 10.64 sec
+
+ Current Memory Usage: 279.294 Meg
+
+Tue Feb 25 04:41:29 2014
+
