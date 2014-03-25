@@ -230,85 +230,176 @@ module MouseMasterSM(
 				//Wait for confirmation of the byte being sent
 				10: if(BYTE_SENT) Next_State = 11;
 
-				// Send sample rate change to 200
-				11:
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
+				11: 
 					begin
-						Next_State 					= 12;
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 12;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
+
+
+				// Send sample rate change to 200
+				12:
+					begin
+						Next_State 					= 13;
 						Next_SendByte 				= 1'b1;
 						Next_ByteToSend 			= 8'hC8;
 					end
 
 				//Wait for confirmation of the byte being sent
-				12: if(BYTE_SENT) Next_State = 13;
+				13: if(BYTE_SENT) Next_State = 14;
 
-				// Send sample rate change request (next byte is value)
-				13:
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
+				14: 
 					begin
-						Next_State 					= 14;
-						Next_SendByte 				= 1'b1;
-						Next_ByteToSend 			= 8'hF3;
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 15;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
 					end
 
-				//Wait for confirmation of the byte being sent
-				14: if(BYTE_SENT) Next_State = 15;
-
-				// Send sample rate change to 100
+				// Send sample rate change request (next byte is value)
 				15:
 					begin
 						Next_State 					= 16;
 						Next_SendByte 				= 1'b1;
-						Next_ByteToSend 			= 8'h64;
+						Next_ByteToSend 			= 8'hF3;
 					end
 
 				//Wait for confirmation of the byte being sent
 				16: if(BYTE_SENT) Next_State = 17;
 
-				// Send sample rate change request (next byte is value)
-				17:
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
+				17: 
 					begin
-						Next_State 					= 18;
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 18;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
+
+				// Send sample rate change to 100
+				18:
+					begin
+						Next_State 					= 19;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'h64;
+					end
+
+				//Wait for confirmation of the byte being sent
+				19: if(BYTE_SENT) Next_State = 20;
+
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
+				20: 
+					begin
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 21;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
+
+				// Send sample rate change request (next byte is value)
+				21:
+					begin
+						Next_State 					= 22;
 						Next_SendByte 				= 1'b1;
 						Next_ByteToSend 			= 8'hF3;
 					end
 
 				//Wait for confirmation of the byte being sent
-				18: if(BYTE_SENT) Next_State = 19;
+				22: if(BYTE_SENT) Next_State = 23;
+
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
+				23: 
+					begin
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 24;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
 
 				// Send sample rate change to 80
-				19:
+				24:
 					begin
-						Next_State 					= 20;
+						Next_State 					= 25;
 						Next_SendByte 				= 1'b1;
 						Next_ByteToSend 			= 8'h50;
 					end
 
 				//Wait for confirmation of the byte being sent
-				20: if(BYTE_SENT) Next_State = 21;
+				25: if(BYTE_SENT) Next_State = 26;
+
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
+				26: 
+					begin
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 27;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
 
 				// Send device ID request
-				21:
+				27:
 					begin
-						Next_State 					= 22;
+						Next_State 					= 28;
 						Next_SendByte 				= 1'b1;
 						Next_ByteToSend 			= 8'hF2;
 					end
 
 				//Wait for confirmation of the byte being sent
-				22: if(BYTE_SENT) Next_State = 23;
+				28: if(BYTE_SENT) Next_State = 29;
 
 
-				23: 
+				29: 
 					begin
 						if(BYTE_READY) 
 							begin
 								if((BYTE_READ == 8'h03) & (BYTE_ERROR_CODE == 2'b00))
-									Next_State 		= 24;
+									Next_State 		= 30;
 									Next_Intellimouse_Mode = 1;
 								else if ((BYTE_READ == 8'h00) & (BYTE_ERROR_CODE == 2'b00))
-									Next_State 		= 24;
+									Next_State 		= 30;
+									Next_Intellimouse_Mode = 0;
 								else
 									Next_State		= 0;
-									Next_Intellimouse_Mode = 0;
 							end
 						
 						Next_ReadEnable 			= 1'b1;
@@ -349,13 +440,13 @@ module MouseMasterSM(
 				FILL IN THIS AREA
 				……………….
 				*/
-				24:
+				30:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 					= 25;
+										Next_State 					= 31;
 										Next_Status 				= BYTE_READ;	
 									end
 								else
@@ -365,13 +456,13 @@ module MouseMasterSM(
 						Next_ReadEnable 							= 1'b1;
 					end
 						
-				25:
+				31:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 					= 26;
+										Next_State 					= 32;
 										Next_Dx 					= BYTE_READ;
 									end
 								else
@@ -387,16 +478,16 @@ module MouseMasterSM(
 				FILL IN THIS AREA
 				……………….
 				*/
-				26:
+				32:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
 										if(Curr_Intellimouse_Mode)
-											Next_State 				= 27;
+											Next_State 				= 33;
 										else
-											Next_State				= 28
+											Next_State				= 34;
 										Next_Dy 					= BYTE_READ;
 									end
 								else
@@ -407,13 +498,14 @@ module MouseMasterSM(
 					end
 
 				// Wait for fourth byte in intellimouse mode
-				27:
+				33:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
 										Next_Dz						= BYTE_READ;
+										Next_State					= 34
 									end
 								else
 									Next_State 						= 0;
@@ -423,10 +515,12 @@ module MouseMasterSM(
 					end
 
 				//Send Interrupt State
-				28: begin
-					Next_State 										= 9;
+				34: 
+				begin
+					Next_State 										= 30;
 					Next_SendInterrupt 								= 1'b1;
 				end
+				
 				//Default State
 				default: begin
 					Next_State 				= 4'h0;
