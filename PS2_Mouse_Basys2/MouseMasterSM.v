@@ -34,6 +34,7 @@ module MouseMasterSM(
 	//Data Registers
 	output [7:0] 	MOUSE_DX,
 	output [7:0] 	MOUSE_DY,
+	output [7:0]	MOUSE_DZ,
 	output [7:0] 	MOUSE_STATUS,
 	output 			SEND_INTERRUPT
 );
@@ -62,17 +63,19 @@ module MouseMasterSM(
 	reg [25:0]	Curr_Timeout_Counter, Next_Timeout_Counter;
 
 	//Transmitter Control
-	reg 			Curr_SendByte, Next_SendByte;
+	reg 		Curr_SendByte, Next_SendByte;
 	reg [7:0] 	Curr_ByteToSend, Next_ByteToSend;
 
 	//Receiver Control
-	reg 			Curr_ReadEnable, Next_ReadEnable;
+	reg 		Curr_ReadEnable, Next_ReadEnable;
 
 	//Data Registers
 	reg [7:0] 	Curr_Status, Next_Status;
 	reg [7:0] 	Curr_Dx, Next_Dx;
 	reg [7:0] 	Curr_Dy, Next_Dy;
-	reg 			Curr_SendInterrupt, Next_SendInterrupt;
+	reg [7:0]	Curr_Dz, Next_Dz;
+	reg 		Curr_SendInterrupt, Next_SendInterrupt;
+	reg 		Curr_Intellimouse_Mode, Next_Intellimouse_Mode;
 
 	//Sequential
 	always@(posedge CLK)
@@ -85,10 +88,11 @@ module MouseMasterSM(
 					Curr_ByteToSend 		<= 8'h00;
 					Curr_ReadEnable 		<= 1'b0;
 					Curr_Status 			<= 8'h00;
-					Curr_Dx 					<= 8'h00;
-					Curr_Dy 					<= 8'h00;
-					Curr_SendInterrupt 	<= 1'b0;
-					Curr_Timeout_Counter <= 0;
+					Curr_Dx 				<= 8'h00;
+					Curr_Dy 				<= 8'h00;
+					Curr_SendInterrupt 		<= 1'b0;
+					Curr_Timeout_Counter 	<= 0;
+					Curr_Intellimouse_Mode	<= 0;
 				end
 			else 
 				begin
@@ -98,10 +102,12 @@ module MouseMasterSM(
 					Curr_ByteToSend 		<= Next_ByteToSend;
 					Curr_ReadEnable 		<= Next_ReadEnable;
 					Curr_Status 			<= Next_Status;
-					Curr_Dx 					<= Next_Dx;
-					Curr_Dy 					<= Next_Dy;
-					Curr_SendInterrupt 	<= Next_SendInterrupt;
-					Curr_Timeout_Counter <= Next_Timeout_Counter;
+					Curr_Dx 				<= Next_Dx;
+					Curr_Dy 				<= Next_Dy;
+					Curr_Dz					<= Next_Dz;
+					Curr_SendInterrupt 		<= Next_SendInterrupt;
+					Curr_Timeout_Counter 	<= Next_Timeout_Counter;
+					Curr_Intellimouse_Mode	<= Next_Intellimouse_Mode;
 				end
 		end
 	
@@ -114,10 +120,12 @@ module MouseMasterSM(
 			Next_ByteToSend 		= Curr_ByteToSend;
 			Next_ReadEnable 		= 1'b0;
 			Next_Status 			= Curr_Status;
-			Next_Dx 					= Curr_Dx;
-			Next_Dy 					= Curr_Dy;
-			Next_SendInterrupt 	= 1'b0;
-			Next_Timeout_Counter = Curr_Timeout_Counter;
+			Next_Dx 				= Curr_Dx;
+			Next_Dy 				= Curr_Dy;
+			Next_Dz					= Curr_Dz;
+			Next_SendInterrupt 		= 1'b0;
+			Next_Timeout_Counter 	= Curr_Timeout_Counter;
+			Next_Intellimouse_Mode	= Curr_Intellimouse_Mode;
 			
 			case(Curr_State)
 				//Initialise State - Wait here for 10ms before trying to initialise the mouse.
@@ -209,6 +217,108 @@ module MouseMasterSM(
 						
 						Next_ReadEnable 			= 1'b1;
 					end
+
+				// From here on out this is to enable microsoft mouse mode (scoll wheel)
+				// Send sample rate change request (next byte is value)
+				9:
+					begin
+						Next_State 					= 10;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'hF3;
+					end
+
+				//Wait for confirmation of the byte being sent
+				10: if(BYTE_SENT) Next_State = 11;
+
+				// Send sample rate change to 200
+				11:
+					begin
+						Next_State 					= 12;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'hC8;
+					end
+
+				//Wait for confirmation of the byte being sent
+				12: if(BYTE_SENT) Next_State = 13;
+
+				// Send sample rate change request (next byte is value)
+				13:
+					begin
+						Next_State 					= 14;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'hF3;
+					end
+
+				//Wait for confirmation of the byte being sent
+				14: if(BYTE_SENT) Next_State = 15;
+
+				// Send sample rate change to 100
+				15:
+					begin
+						Next_State 					= 16;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'h64;
+					end
+
+				//Wait for confirmation of the byte being sent
+				16: if(BYTE_SENT) Next_State = 17;
+
+				// Send sample rate change request (next byte is value)
+				17:
+					begin
+						Next_State 					= 18;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'hF3;
+					end
+
+				//Wait for confirmation of the byte being sent
+				18: if(BYTE_SENT) Next_State = 19;
+
+				// Send sample rate change to 80
+				19:
+					begin
+						Next_State 					= 20;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'h50;
+					end
+
+				//Wait for confirmation of the byte being sent
+				20: if(BYTE_SENT) Next_State = 21;
+
+				// Send device ID request
+				21:
+					begin
+						Next_State 					= 22;
+						Next_SendByte 				= 1'b1;
+						Next_ByteToSend 			= 8'hF2;
+					end
+
+				//Wait for confirmation of the byte being sent
+				22: if(BYTE_SENT) Next_State = 23;
+
+
+				23: 
+					begin
+						if(BYTE_READY) 
+							begin
+								if((BYTE_READ == 8'h03) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 24;
+									Next_Intellimouse_Mode = 1;
+								else if ((BYTE_READ == 8'h00) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 24;
+								else
+									Next_State		= 0;
+									Next_Intellimouse_Mode = 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
+
+
+
+
+
+
 				///////////////////////////////////////////////////////////
 				//At this point the SM has initialised the mouse.
 				//Now we are constantly reading. If at any time
@@ -239,59 +349,36 @@ module MouseMasterSM(
 				FILL IN THIS AREA
 				……………….
 				*/
-				/*
-				4'h9: begin
-					if(BYTE_READY & (BYTE_ERROR_CODE == 2'b00)) begin
-						Next_State = 4'hA;
-						Next_Status = BYTE_READ;
-					end else
-						Next_State = 4'h9;
-						
-					Next_Counter = 0;
-					Next_ReadEnable = 1'b1;
-				end
-				*/
-				9:
+				24:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 					= 10;
-										Next_Status 				= BYTE_READ;
-										Next_Timeout_Counter 	= 0;	
+										Next_State 					= 25;
+										Next_Status 				= BYTE_READ;	
 									end
 								else
 									Next_State 						= 0;					// actually reinit on corrupted byte
-									Next_Timeout_Counter 		= 0;
-							end
-						else if(Curr_Timeout_Counter == 50000000)		// reset device every 1ms
-							begin
-								Next_Timeout_Counter 			= 0;			 
-								Next_State							= 0;
-							end
-						else
-							Next_Timeout_Counter = Curr_Timeout_Counter + 1;
-						
-						
+							end			
 
-						Next_ReadEnable 					= 1'b1;
+						Next_ReadEnable 							= 1'b1;
 					end
 						
-				10:
+				25:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 			= 11;
-										Next_Dx 				= BYTE_READ;
+										Next_State 					= 26;
+										Next_Dx 					= BYTE_READ;
 									end
 								else
-									Next_State 				= 0;
+									Next_State 						= 0;
 							end
 							
-						Next_ReadEnable 					= 1'b1;
+						Next_ReadEnable 							= 1'b1;
 					end
 				//Wait for confirmation of a byte being received
 				//This byte will be the third of three, the Dy byte.
@@ -300,25 +387,45 @@ module MouseMasterSM(
 				FILL IN THIS AREA
 				……………….
 				*/
-				11:
+				26:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 			= 12;
-										Next_Dy 				= BYTE_READ;
+										if(Curr_Intellimouse_Mode)
+											Next_State 				= 27;
+										else
+											Next_State				= 28
+										Next_Dy 					= BYTE_READ;
 									end
 								else
-									Next_State 				= 0;
+									Next_State 						= 0;
 							end
 							
-						Next_ReadEnable 					= 1'b1;
+						Next_ReadEnable 							= 1'b1;
 					end
+
+				// Wait for fourth byte in intellimouse mode
+				27:
+					begin
+						if(BYTE_READY)
+							begin
+								if(BYTE_ERROR_CODE == 2'b00)
+									begin
+										Next_Dz						= BYTE_READ;
+									end
+								else
+									Next_State 						= 0;
+							end
+							
+						Next_ReadEnable 							= 1'b1;
+					end
+
 				//Send Interrupt State
-				12: begin
-					Next_State 								= 9;
-					Next_SendInterrupt 					= 1'b1;
+				28: begin
+					Next_State 										= 9;
+					Next_SendInterrupt 								= 1'b1;
 				end
 				//Default State
 				default: begin
@@ -328,9 +435,10 @@ module MouseMasterSM(
 					Next_ByteToSend 		= 8'hFF;
 					Next_ReadEnable 		= 1'b0;
 					Next_Status 			= 8'h00;
-					Next_Dx 					= 8'h00;
-					Next_Dy 					= 8'h00;
-					Next_SendInterrupt 	= 1'b0;
+					Next_Dx 				= 8'h00;
+					Next_Dy 				= 8'h00;
+					Next_Dz					= 8'h00;
+					Next_SendInterrupt 		= 1'b0;
 				end
 			endcase
 		end
@@ -342,11 +450,12 @@ module MouseMasterSM(
 	assign BYTE_TO_SEND 		= Curr_ByteToSend;
 	
 	//Receiver
-	assign READ_ENABLE 		= Curr_ReadEnable;
+	assign READ_ENABLE 			= Curr_ReadEnable;
 	
 	//Output Mouse Data
 	assign MOUSE_DX 			= Curr_Dx;
 	assign MOUSE_DY 			= Curr_Dy;
 	assign MOUSE_STATUS 		= Curr_Status;
-	assign SEND_INTERRUPT 	= Curr_SendInterrupt;
+	assign SEND_INTERRUPT 		= Curr_SendInterrupt;
+	assign MOUSE_DZ				= Curr_Dz;
 endmodule

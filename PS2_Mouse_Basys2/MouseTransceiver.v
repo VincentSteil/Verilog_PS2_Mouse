@@ -42,6 +42,7 @@ module MouseTransceiver(
 	// X, Y Limits of Mouse Position e.g. VGA Screen with 160 x 120 resolution
 	parameter [7:0] MouseLimitX = 160;
 	parameter [7:0] MouseLimitY = 120;
+	parameter [7:0] MouseLimitZ = 255;
 	
 	/////////////////////////////////////////////////////////////////////
 	//TriState Signals
@@ -136,7 +137,8 @@ module MouseTransceiver(
 	wire [7:0] 				MouseStatusRaw;
 	wire [7:0] 				MouseDxRaw;
 	wire [7:0] 				MouseDyRaw;
-	wire 						SendInterrupt;
+	wire [7:0]				MouseDzRaw;
+	wire 					SendInterrupt;
 	MouseMasterSM MSM(
 								//Standard Inputs
 								.RESET(RESET),
@@ -154,6 +156,7 @@ module MouseTransceiver(
 								.MOUSE_STATUS(MouseStatusRaw),
 								.MOUSE_DX(MouseDxRaw),
 								.MOUSE_DY(MouseDyRaw),
+								.MOUSE_DZ(MouseDzRaw),
 								.SEND_INTERRUPT(SendInterrupt)
 	);
 
@@ -187,6 +190,7 @@ module MouseTransceiver(
 	wire signed [8:0] MouseDy;
 	wire signed [8:0] MouseNewX;
 	wire signed [8:0] MouseNewY;
+	wire signed [3:0] MouseDz;
 	
 	//DX and DY are modified to take account of overflow and direction
 	assign MouseDx = (MouseStatusRaw[6]) ? (MouseStatusRaw[4] ? {MouseStatusRaw[4],8'h00} : {MouseStatusRaw[4],8'hFF} ) : {MouseStatusRaw[4],MouseDxRaw[7:0]};
@@ -209,13 +213,14 @@ module MouseTransceiver(
 			}
 		}
 		else{
-				MouseDy = concat(MouseStatusRaw[5],MouseDyRaw[7:0])	// if not overflow, accept incoming dy value in 2's comp (hence appended sign bit)
+				MouseDy = concat(MouseStatusRaw[5],MouseDyRaw[7:0])	// if not overflow, accept incoming dy value in 2's comp (hence prepended sign bit)
 		}
 	
 	*/
 	// calculate new mouse position
 	assign MouseNewX = {1'b0,MouseX} + MouseDx;
 	assign MouseNewY = {1'b0,MouseY} + MouseDy;
+	assign MouseNewZ = MouseZ + MouseDz;
 
 	always@(posedge CLK)
 		begin
@@ -224,6 +229,7 @@ module MouseTransceiver(
 					MouseStatus 	<= 0;
 					MouseX 			<= MouseLimitX/2;
 					MouseY 			<= MouseLimitY/2;
+					MouseZ 			<= MouseLimitZ/2;
 				end 
 			else if (SendInterrupt) 
 				begin
@@ -251,7 +257,13 @@ module MouseTransceiver(
 					else
 						MouseY 		<= MouseNewY[7:0];
 						
-				
+					//Z is modified based on DZ with limits on max and min
+					if(MouseNewZ < 0)
+						MouseY 		<= 0;
+					else if(MouseNewZ > (MouseLimitZ-1))
+						MouseZ 		<= MouseLimitZ-1;
+					else
+						MouseZ 		<= MouseNewZ[7:0];				
 				end
 		end
 
