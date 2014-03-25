@@ -387,16 +387,30 @@ module MouseMasterSM(
 				//Wait for confirmation of the byte being sent
 				28: if(BYTE_SENT) Next_State = 29;
 
-
+				//Wait for confirmation of a byte being received
+				//If the byte is FA goto next state, else re-initialise.
 				29: 
+					begin
+						if(BYTE_READY)
+							begin
+								if((BYTE_READ == 8'hFA) & (BYTE_ERROR_CODE == 2'b00))
+									Next_State 		= 30;
+								else
+									Next_State 		= 0;
+							end
+						
+						Next_ReadEnable 			= 1'b1;
+					end
+
+				30: 
 					begin
 						if(BYTE_READY) 
 							begin
 								if((BYTE_READ == 8'h03) & (BYTE_ERROR_CODE == 2'b00))
-									Next_State 		= 30;
+									Next_State 		= 31;
 									Next_Intellimouse_Mode = 1;
 								else if ((BYTE_READ == 8'h00) & (BYTE_ERROR_CODE == 2'b00))
-									Next_State 		= 30;
+									Next_State 		= 31;
 									Next_Intellimouse_Mode = 0;
 								else
 									Next_State		= 0;
@@ -440,13 +454,13 @@ module MouseMasterSM(
 				FILL IN THIS AREA
 				……………….
 				*/
-				30:
+				31:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 					= 31;
+										Next_State 					= 32;
 										Next_Status 				= BYTE_READ;	
 									end
 								else
@@ -456,13 +470,13 @@ module MouseMasterSM(
 						Next_ReadEnable 							= 1'b1;
 					end
 						
-				31:
+				32:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
-										Next_State 					= 32;
+										Next_State 					= 33;
 										Next_Dx 					= BYTE_READ;
 									end
 								else
@@ -478,16 +492,16 @@ module MouseMasterSM(
 				FILL IN THIS AREA
 				……………….
 				*/
-				32:
+				33:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
 										if(Curr_Intellimouse_Mode)
-											Next_State 				= 33;
+											Next_State 				= 34;
 										else
-											Next_State				= 34;
+											Next_State				= 35;
 										Next_Dy 					= BYTE_READ;
 									end
 								else
@@ -498,14 +512,14 @@ module MouseMasterSM(
 					end
 
 				// Wait for fourth byte in intellimouse mode
-				33:
+				34:
 					begin
 						if(BYTE_READY)
 							begin
 								if(BYTE_ERROR_CODE == 2'b00)
 									begin
 										Next_Dz						= BYTE_READ;
-										Next_State					= 34
+										Next_State					= 35;
 									end
 								else
 									Next_State 						= 0;
@@ -515,12 +529,12 @@ module MouseMasterSM(
 					end
 
 				//Send Interrupt State
-				34: 
+				35: 
 				begin
-					Next_State 										= 30;
+					Next_State 										= 31;
 					Next_SendInterrupt 								= 1'b1;
 				end
-				
+
 				//Default State
 				default: begin
 					Next_State 				= 4'h0;
