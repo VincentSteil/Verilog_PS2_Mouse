@@ -115,8 +115,8 @@ module MouseTransceiver(
 	///////////////////////////////////////////////////////
 	//Instantiate the Receiver module
 	wire 					ReadEnable;
-	wire [7:0] 			ByteRead;
-	wire [1:0] 			ByteErrorCode;
+	wire [7:0] 				ByteRead;
+	wire [1:0] 				ByteErrorCode;
 	wire 					ByteReady;
 	MouseReceiver R(
 							//Standard Inputs
