@@ -34,6 +34,7 @@ module MouseTransceiver(
 	output reg [3:0] 	MouseStatus,		// needed to add reg status to do non-blocking assign
 	output reg [7:0] 	MouseX,
 	output reg [7:0] 	MouseY,
+	output reg [7:0]	MouseZ,
 	output wire			AN0, AN1, AN2, AN3,
 	output wire			CA, CB, CC, CD, CE, CF, CG, CDP
 );
@@ -179,8 +180,8 @@ module MouseTransceiver(
 								// Actual display values
 								.DIGIT1(MouseX[7:4]),		
 								.DIGIT2(MouseX[3:0]),		
-								.DIGIT3(MouseY[7:4]),		
-								.DIGIT4(MouseY[3:0])			
+								.DIGIT3(MouseZ[7:4]),		
+								.DIGIT4(MouseZ[3:0])			
 	);
 	
 	//Pre-processing - handling of overflow and signs.
@@ -190,7 +191,8 @@ module MouseTransceiver(
 	wire signed [8:0] MouseDy;
 	wire signed [8:0] MouseNewX;
 	wire signed [8:0] MouseNewY;
-	wire signed [3:0] MouseDz;
+	wire signed [8:0] MouseDz;
+	wire signed [8:0] MouseNewZ;
 	
 	//DX and DY are modified to take account of overflow and direction
 	assign MouseDx = (MouseStatusRaw[6]) ? (MouseStatusRaw[4] ? {MouseStatusRaw[4],8'h00} : {MouseStatusRaw[4],8'hFF} ) : {MouseStatusRaw[4],MouseDxRaw[7:0]};
@@ -218,9 +220,12 @@ module MouseTransceiver(
 	
 	*/
 	// calculate new mouse position
+	assign MouseDz = {MouseDzRaw[7],MouseDzRaw[7:0]};
+	
+	
 	assign MouseNewX = {1'b0,MouseX} + MouseDx;
 	assign MouseNewY = {1'b0,MouseY} + MouseDy;
-	assign MouseNewZ = MouseZ + MouseDz;
+	assign MouseNewZ = {1'b0,MouseZ} + MouseDz;
 
 	always@(posedge CLK)
 		begin
@@ -258,10 +263,11 @@ module MouseTransceiver(
 						MouseY 		<= MouseNewY[7:0];
 						
 					//Z is modified based on DZ with limits on max and min
+					//Z wraps around, as this is a scroll wheel
 					if(MouseNewZ < 0)
-						MouseY 		<= 0;
-					else if(MouseNewZ > (MouseLimitZ-1))
-						MouseZ 		<= MouseLimitZ-1;
+						MouseY 		<= MouseLimitZ;
+					else if(MouseNewZ > MouseLimitZ)
+						MouseZ 		<= 0;
 					else
 						MouseZ 		<= MouseNewZ[7:0];				
 				end

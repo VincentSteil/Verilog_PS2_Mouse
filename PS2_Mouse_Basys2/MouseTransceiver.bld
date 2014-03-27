@@ -7,8 +7,8 @@ build -intstyle ise -dd _ngo -nt timestamp -uc MouseTransceiver.ucf -p
 xc3s100e-cp132-5 MouseTransceiver.ngc MouseTransceiver.ngd
 
 Reading NGO file
-"/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/
-MouseTransceiver.ngc" ...
+"/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/Verilog_PS2_Mouse-master/PS2_Mouse_
+Basys2/MouseTransceiver.ngc" ...
 Gathering constraint information from source properties...
 Done.
 
@@ -30,7 +30,7 @@ NGDBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 360212 kilobytes
+Total memory usage is 360256 kilobytes
 
 Writing NGD file "MouseTransceiver.ngd" ...
 Total REAL time to NGDBUILD completion:  3 sec

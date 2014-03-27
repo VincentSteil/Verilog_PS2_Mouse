@@ -8,7 +8,7 @@
 <!-- Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
-<msg type="info" file="ProjectMgmt" num="1769" ><arg fmt="%s" index="1">Analyzing Verilog file \&quot;/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/PS2_Mouse_Verilog/PS2_Mouse_Basys2/MouseTransmitter.v\&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1769" ><arg fmt="%s" index="1">Analyzing Verilog file \&quot;/afs/inf.ed.ac.uk/user/s10/s1008380/Desktop/Verilog_PS2_Mouse-master/PS2_Mouse_Basys2/MouseTransceiver.v\&quot; into library work</arg>
 </msg>
 
 </messages>

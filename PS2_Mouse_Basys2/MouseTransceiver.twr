@@ -45,9 +45,9 @@ Setup/Hold to clock CLK
             |Max Setup to|Max Hold to |                  | Clock  |
 Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
 ------------+------------+------------+------------------+--------+
-CLK_MOUSE   |    0.673(R)|    0.552(R)|CLK_BUFGP         |   0.000|
-DATA_MOUSE  |    2.565(R)|    0.634(R)|CLK_BUFGP         |   0.000|
-RESET       |    2.193(R)|    0.800(R)|CLK_BUFGP         |   0.000|
+CLK_MOUSE   |    0.233(R)|    0.910(R)|CLK_BUFGP         |   0.000|
+DATA_MOUSE  |    2.514(R)|    0.510(R)|CLK_BUFGP         |   0.000|
+RESET       |    1.604(R)|    1.187(R)|CLK_BUFGP         |   0.000|
 ------------+------------+------------+------------------+--------+
 
 Clock CLK to Pad
@@ -55,38 +55,47 @@ Clock CLK to Pad
               | clk (edge) |                  | Clock  |
 Destination   |   to PAD   |Internal Clock(s) | Phase  |
 --------------+------------+------------------+--------+
-AN0           |    8.878(R)|CLK_BUFGP         |   0.000|
-AN1           |    8.621(R)|CLK_BUFGP         |   0.000|
-AN2           |    8.536(R)|CLK_BUFGP         |   0.000|
-AN3           |    8.870(R)|CLK_BUFGP         |   0.000|
-CA            |    8.163(R)|CLK_BUFGP         |   0.000|
-CB            |    8.868(R)|CLK_BUFGP         |   0.000|
-CC            |    9.317(R)|CLK_BUFGP         |   0.000|
-CD            |    9.135(R)|CLK_BUFGP         |   0.000|
-CE            |    9.335(R)|CLK_BUFGP         |   0.000|
-CF            |    8.223(R)|CLK_BUFGP         |   0.000|
-CG            |    9.182(R)|CLK_BUFGP         |   0.000|
-CLK_MOUSE     |   10.309(R)|CLK_BUFGP         |   0.000|
-DATA_MOUSE    |   10.553(R)|CLK_BUFGP         |   0.000|
-MouseStatus<0>|    7.518(R)|CLK_BUFGP         |   0.000|
-MouseStatus<1>|    7.553(R)|CLK_BUFGP         |   0.000|
-MouseStatus<2>|    7.824(R)|CLK_BUFGP         |   0.000|
-MouseStatus<3>|    7.200(R)|CLK_BUFGP         |   0.000|
-MouseX<0>     |    7.446(R)|CLK_BUFGP         |   0.000|
-MouseX<1>     |    7.254(R)|CLK_BUFGP         |   0.000|
-MouseX<2>     |    7.208(R)|CLK_BUFGP         |   0.000|
-MouseX<3>     |    7.426(R)|CLK_BUFGP         |   0.000|
-MouseX<4>     |    7.670(R)|CLK_BUFGP         |   0.000|
-MouseX<5>     |    7.486(R)|CLK_BUFGP         |   0.000|
-MouseX<6>     |    7.715(R)|CLK_BUFGP         |   0.000|
-MouseX<7>     |    7.718(R)|CLK_BUFGP         |   0.000|
-MouseY<0>     |    8.203(R)|CLK_BUFGP         |   0.000|
-MouseY<1>     |    7.639(R)|CLK_BUFGP         |   0.000|
-MouseY<2>     |    7.725(R)|CLK_BUFGP         |   0.000|
-MouseY<3>     |    7.669(R)|CLK_BUFGP         |   0.000|
-MouseY<4>     |    7.233(R)|CLK_BUFGP         |   0.000|
-MouseY<5>     |    7.481(R)|CLK_BUFGP         |   0.000|
-MouseY<6>     |    7.717(R)|CLK_BUFGP         |   0.000|
+AN0           |    9.754(R)|CLK_BUFGP         |   0.000|
+AN1           |    8.224(R)|CLK_BUFGP         |   0.000|
+AN2           |    9.077(R)|CLK_BUFGP         |   0.000|
+AN3           |    8.595(R)|CLK_BUFGP         |   0.000|
+CA            |    9.480(R)|CLK_BUFGP         |   0.000|
+CB            |    9.265(R)|CLK_BUFGP         |   0.000|
+CC            |    9.163(R)|CLK_BUFGP         |   0.000|
+CD            |    9.178(R)|CLK_BUFGP         |   0.000|
+CE            |    9.229(R)|CLK_BUFGP         |   0.000|
+CF            |    9.514(R)|CLK_BUFGP         |   0.000|
+CG            |    9.380(R)|CLK_BUFGP         |   0.000|
+CLK_MOUSE     |   10.063(R)|CLK_BUFGP         |   0.000|
+DATA_MOUSE    |   10.624(R)|CLK_BUFGP         |   0.000|
+MouseStatus<0>|    7.372(R)|CLK_BUFGP         |   0.000|
+MouseStatus<1>|    7.808(R)|CLK_BUFGP         |   0.000|
+MouseStatus<2>|    7.607(R)|CLK_BUFGP         |   0.000|
+MouseStatus<3>|    6.869(R)|CLK_BUFGP         |   0.000|
+MouseX<0>     |    7.448(R)|CLK_BUFGP         |   0.000|
+MouseX<1>     |    7.550(R)|CLK_BUFGP         |   0.000|
+MouseX<2>     |    7.270(R)|CLK_BUFGP         |   0.000|
+MouseX<3>     |    7.384(R)|CLK_BUFGP         |   0.000|
+MouseX<4>     |    7.540(R)|CLK_BUFGP         |   0.000|
+MouseX<5>     |    7.445(R)|CLK_BUFGP         |   0.000|
+MouseX<6>     |    7.878(R)|CLK_BUFGP         |   0.000|
+MouseX<7>     |    7.418(R)|CLK_BUFGP         |   0.000|
+MouseY<0>     |    7.853(R)|CLK_BUFGP         |   0.000|
+MouseY<1>     |    7.663(R)|CLK_BUFGP         |   0.000|
+MouseY<2>     |    7.926(R)|CLK_BUFGP         |   0.000|
+MouseY<3>     |    7.584(R)|CLK_BUFGP         |   0.000|
+MouseY<4>     |    7.650(R)|CLK_BUFGP         |   0.000|
+MouseY<5>     |    7.189(R)|CLK_BUFGP         |   0.000|
+MouseY<6>     |    7.541(R)|CLK_BUFGP         |   0.000|
+MouseY<7>     |    7.436(R)|CLK_BUFGP         |   0.000|
+MouseZ<0>     |    7.196(R)|CLK_BUFGP         |   0.000|
+MouseZ<1>     |    6.949(R)|CLK_BUFGP         |   0.000|
+MouseZ<2>     |    7.207(R)|CLK_BUFGP         |   0.000|
+MouseZ<3>     |    6.964(R)|CLK_BUFGP         |   0.000|
+MouseZ<4>     |    7.009(R)|CLK_BUFGP         |   0.000|
+MouseZ<5>     |    7.399(R)|CLK_BUFGP         |   0.000|
+MouseZ<6>     |    7.138(R)|CLK_BUFGP         |   0.000|
+MouseZ<7>     |    7.194(R)|CLK_BUFGP         |   0.000|
 --------------+------------+------------------+--------+
 
 Clock to Setup on destination clock CLK
@@ -94,11 +103,11 @@ Clock to Setup on destination clock CLK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-CLK            |    6.959|         |         |         |
+CLK            |    6.795|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 
-Analysis completed Tue Feb 25 06:40:39 2014 
+Analysis completed Thu Mar 27 17:12:55 2014 
 --------------------------------------------------------------------------------
 
 Trace Settings:
